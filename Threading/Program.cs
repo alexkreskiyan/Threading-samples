@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            ThreadingFour.Test.Run();
+            ThreadingFive.Test.Run();
         }
     }
 }
