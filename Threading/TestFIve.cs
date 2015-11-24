@@ -1,55 +1,43 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
+using Threading;
 
 namespace ThreadingFive
 {
     internal class Test
     {
-        static SemaphoreSlim semaphore = new SemaphoreSlim(3);
+        private static SemaphoreSlim semaphore = new SemaphoreSlim(3);
 
         public static void Run()
         {
-            Console.WriteLine("Start");
-            for (var i = 1; i <= 5; i++)
+            using (var countdown = new CountdownEvent(5))
             {
-                var t = new Thread(Enter);
-                t.Start(i);
-                t.Join();
+                Program.WriteLine("Start");
+                for (var i = 1; i <= countdown.InitialCount; i++)
+                {
+                    var t = new Thread(Enter);
+                    t.Name = "Worker " + i;
+                    t.Start(countdown);
+                    Program.WriteLine(t.Name + " started");
+                }
+                countdown.Wait();
             }
-            Console.WriteLine("End");
+            Program.WriteLine("End");
         }
 
-        private static void Enter(object id)
+        private static void Enter(object countdown)
         {
-            Console.WriteLine(id + " wants to enter");
+            var name = Thread.CurrentThread.Name;
+
+            Program.WriteLine(name + " wants to enter");
             semaphore.Wait();
-            Console.WriteLine(id + " is in!");
-            Thread.Sleep(500 * (int)id);
-            Console.WriteLine(id + " is leaving");
+
+            Program.WriteLine(name + " is in!");
+            Thread.Sleep(50);
+
+            Program.WriteLine(name + " is leaving");
             semaphore.Release();
-        }
-    }
 
-    public class Instance
-    {
-        private string name;
-
-        public Instance(string name)
-        {
-            this.name = name;
-        }
-
-        public void Run(object state)
-        {
-            for (var i = 0; i < 6; i++)
-            {
-                Console.WriteLine("[I{0}:T{1}:{2}]", name, Thread.CurrentThread.ManagedThreadId, i);
-            }
-        }
-
-        public override string ToString()
-        {
-            return string.Concat("instance ", name);
+            (countdown as CountdownEvent).Signal();
         }
     }
 }

@@ -1,10 +1,22 @@
-﻿namespace Threading
+﻿using System;
+
+namespace Threading
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        static object stdoutLocker = new object();
+        private static void Main(string[] args)
         {
-            ThreadingFive.Test.Run();
+            ThreadingAutoResetEvent.Test.Run();
+        }
+
+        public static void WriteLine(string message)
+        {
+            lock (stdoutLocker)
+            {
+                Console.Write(DateTime.Now.ToString("HH:mm:ss.ffff: "));
+                Console.WriteLine(message);
+            }
         }
     }
 }
