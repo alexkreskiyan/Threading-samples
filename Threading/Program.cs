@@ -9,7 +9,7 @@ namespace Threading
 
         private static void Main(string[] args)
         {
-            ThreadingTwoWaySignals.Test.Run();
+            ThreadingAutoResetEvent.Test.Run();
         }
 
         public static void WriteLine(string message)

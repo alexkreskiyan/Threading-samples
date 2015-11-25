@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading;
 
-namespace Threading
+namespace ThreadingOne
 {
-    class TestOne
+    class Test
     {
         public static void Run()
         {

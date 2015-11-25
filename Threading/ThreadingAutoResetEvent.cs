@@ -11,11 +11,12 @@ namespace ThreadingAutoResetEvent
         {
             Console.WriteLine("Start");
 
-            new Thread(Waiter).Start();
+            var t = new Thread(Waiter);
+            t.Start();
             Thread.Sleep(1000);
 
             waitHandle.Set();
-
+            t.Join();
             Console.WriteLine("End");
         }
 

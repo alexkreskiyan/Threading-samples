@@ -45,13 +45,13 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestTwoWaySignals.cs" />
-    <Compile Include="TestAutoResetEvent.cs" />
-    <Compile Include="TestFIve.cs" />
-    <Compile Include="TestFour.cs" />
-    <Compile Include="TestOne.cs" />
-    <Compile Include="TestThree.cs" />
-    <Compile Include="TestTwo.cs" />
+    <Compile Include="ThreadingTwoWaySignaling.cs" />
+    <Compile Include="ThreadingAutoResetEvent.cs" />
+    <Compile Include="ThreadingFive.cs" />
+    <Compile Include="ThreadingFour.cs" />
+    <Compile Include="ThreadingOne.cs" />
+    <Compile Include="ThreadingThree.cs" />
+    <Compile Include="ThreadingTwo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
