@@ -9,7 +9,8 @@ namespace Threading
 
         private static void Main(string[] args)
         {
-            ThreadingProducerConsumerManual.Test.Run();
+            Thread.CurrentThread.Name = "Main";
+            ThreadingCountdownEvent.Test.Run();
         }
 
         public static void WriteLine(string message)
@@ -27,7 +28,7 @@ namespace Threading
             lock (stdoutLocker)
             {
                 Console.Write(DateTime.Now.ToString("HH:mm:ss.ffff "));
-                Console.Write("{0,-10} ", string.Concat('[', Thread.CurrentThread.Name, ']'));
+                Console.Write("{0,-15} ", string.Concat('[', Thread.CurrentThread.Name, ']'));
                 Console.WriteLine(message);
             }
         }
