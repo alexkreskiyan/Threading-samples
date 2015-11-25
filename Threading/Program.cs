@@ -9,7 +9,7 @@ namespace Threading
 
         private static void Main(string[] args)
         {
-            ThreadingAutoResetEvent.Test.Run();
+            ThreadingProducerConsumer.Test.Run();
         }
 
         public static void WriteLine(string message)
