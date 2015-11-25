@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Threading;
 
-namespace ThreadingProducerConsumer
+namespace ThreadingProducerConsumerManual
 {
     internal class Test
     {
@@ -26,7 +26,7 @@ namespace ThreadingProducerConsumer
 
     internal class ProducerConsumerQueue : IDisposable
     {
-        private EventWaitHandle waitHandle = new AutoResetEvent(false);
+        private ManualResetEventSlim gate = new ManualResetEventSlim(false);
         private Thread worker;
         private readonly object locker = new object();
         private Queue<string> tasks = new Queue<string>();
@@ -46,7 +46,7 @@ namespace ThreadingProducerConsumer
                 Program.WriteLine("Adding task `{0}`", task);
                 tasks.Enqueue(task);
             }
-            waitHandle.Set();
+            gate.Set();
         }
 
         public void Dispose()
@@ -58,7 +58,7 @@ namespace ThreadingProducerConsumer
             worker.Join();
 
             // Release any OS resources.
-            waitHandle.Close();
+            gate.Dispose();
 
             Program.WriteLine("Queue disposed");
         }
@@ -84,7 +84,7 @@ namespace ThreadingProducerConsumer
                 if (task == null)
                 {
                     Program.WriteLine("No more tasks, wait for a signal");
-                    waitHandle.WaitOne();
+                    gate.Wait();
                 }
                 else
                 {
