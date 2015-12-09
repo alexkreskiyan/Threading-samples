@@ -7,8 +7,6 @@ namespace ThreadingThree
     {
         public static void Run()
         {
-            Thread.CurrentThread.Name = "main";
-
             Console.WriteLine("Main thread id: {0}", Thread.CurrentThread.ManagedThreadId);
 
             var t = new Thread(Go);

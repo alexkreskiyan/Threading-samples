@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using Threading;
 
-namespace ThreadingTwoWaySignals
+namespace ThreadingTwoWaySignaling
 {
     internal class Test
     {
@@ -14,7 +14,6 @@ namespace ThreadingTwoWaySignals
 
         public static void Run()
         {
-            Thread.CurrentThread.Name = "Main";
             Program.WriteLine("Start");
 
             new Thread(Work) { Name = "Worker" }.Start();

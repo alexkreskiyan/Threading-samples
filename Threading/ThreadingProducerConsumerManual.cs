@@ -10,7 +10,7 @@ namespace ThreadingProducerConsumerManual
         public static void Run()
         {
             Program.WriteLine("Start");
-            Thread.CurrentThread.Name = "Main";
+
             using (ProducerConsumerQueue queue = new ProducerConsumerQueue())
             {
                 queue.AddTask("Hello");

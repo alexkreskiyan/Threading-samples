@@ -16,8 +16,8 @@ namespace ThreadingFive
                 {
                     var t = new Thread(Enter);
                     t.Name = "Worker " + i;
+                    Program.WriteLine(t.Name + " starting");
                     t.Start(countdown);
-                    Program.WriteLine(t.Name + " started");
                 }
                 countdown.Wait();
             }
