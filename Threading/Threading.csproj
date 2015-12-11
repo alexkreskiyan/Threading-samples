@@ -46,6 +46,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ThreadingCountdownEvent.cs" />
+    <Compile Include="ThreadingEAPWebclient.cs" />
     <Compile Include="ThreadingSynchronizationAttribute.cs" />
     <Compile Include="ThreadingWaitForSingleObject.cs" />
     <Compile Include="ThreadingProducerConsumerManual.cs" />
