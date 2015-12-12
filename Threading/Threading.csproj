@@ -49,6 +49,7 @@
     <Compile Include="ThreadingCountdownEvent.cs" />
     <Compile Include="ThreadingBackgroundWorkerSimple.cs" />
     <Compile Include="ThreadingEAPWebClient.cs" />
+    <Compile Include="ThreadingCancellationToken.cs" />
     <Compile Include="ThreadingSynchronizationAttribute.cs" />
     <Compile Include="ThreadingWaitForSingleObject.cs" />
     <Compile Include="ThreadingProducerConsumerManual.cs" />
