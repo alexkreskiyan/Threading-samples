@@ -18,7 +18,6 @@ namespace ThreadingEAPWebClient
                       Program.WriteLine("Exception: {0}", args.Error.Message);
                   else
                       Program.WriteLine("{0} chars downloaded", args.Result.Length);
-
               };
             wc.DownloadDataAsync(new Uri("http://alex-nl.azurewebsites.net/"));
             Thread.Sleep(1000);

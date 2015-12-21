@@ -24,7 +24,6 @@ namespace ThreadingBackgroundWorkerComplex
             worker.ProgressChanged += HandleProgressChanged;
             worker.RunWorkerCompleted += HandleRunWorkerCompleted;
 
-
             Program.WriteLine("Run worker async");
             worker.RunWorkerAsync("some work");
 

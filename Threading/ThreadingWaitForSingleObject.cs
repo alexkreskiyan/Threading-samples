@@ -3,7 +3,7 @@ using Threading;
 
 namespace ThreadingWaitForSingleObject
 {
-    class Test
+    internal class Test
     {
         public static void Run()
         {

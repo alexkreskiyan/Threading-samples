@@ -5,10 +5,10 @@ namespace ThreadingTwoWaySignaling
 {
     internal class Test
     {
-        static EventWaitHandle worker = new AutoResetEvent(false);
-        static EventWaitHandle main = new AutoResetEvent(false);
-        static readonly object locker = new object();
-        static string message;
+        private static EventWaitHandle worker = new AutoResetEvent(false);
+        private static EventWaitHandle main = new AutoResetEvent(false);
+        private static readonly object locker = new object();
+        private static string message;
 
         private static EventWaitHandle waitHandle = new AutoResetEvent(false);
 

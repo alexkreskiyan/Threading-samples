@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace ThreadingOne
 {
-    class Test
+    internal class Test
     {
         public static void Run()
         {
