@@ -7,9 +7,10 @@ namespace ThreadingInterlockedSimple
     {
         public static void Run()
         {
-            using (var countdown = new CountdownEvent(10))
+            Program.WriteLine("Run parallel...");
+            using (var countdown = new CountdownEvent(100))
             {
-                for (var i = 0; i < 10; i++)
+                for (var i = 0; i < countdown.InitialCount; i++)
                 {
                     var t = new Thread(Incremental.Run);
                     t.Name = "Worker" + i;
@@ -25,13 +26,11 @@ namespace ThreadingInterlockedSimple
 
     internal class Incremental
     {
-        public static int x = 1000;
+        public static int x = 200000;
 
         public static void Run(object countdown)
         {
-            Program.WriteLine("Decrementing...");
-
-            for (var i = 0; i < 100; i++)
+            for (var i = 0; i < 2000; i++)
                 x = x - 1;
 
             (countdown as CountdownEvent).Signal();
