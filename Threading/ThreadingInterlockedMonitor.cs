@@ -44,6 +44,7 @@ namespace ThreadingInterlockedMonitor
         public static void Enter(object obj)
         {
             while (locks.Contains(obj)) ;
+            Thread.MemoryBarrier();
             locks.Add(obj);
             Program.WriteLine("Lock obtained");
         }
