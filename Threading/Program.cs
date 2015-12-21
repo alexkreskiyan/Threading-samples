@@ -10,7 +10,7 @@ namespace Threading
         private static void Main(string[] args)
         {
             Thread.CurrentThread.Name = "Main";
-            ThreadingSimpleTimer.Test.Run();
+            ThreadingInterlockedSimple.Test.Run();
         }
 
         public static void WriteLine(string message)
