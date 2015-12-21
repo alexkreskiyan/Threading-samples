@@ -48,6 +48,7 @@
     <Compile Include="ThreadingBackgroundWorkerComplex.cs" />
     <Compile Include="ThreadingCountdownEvent.cs" />
     <Compile Include="ThreadingBackgroundWorkerSimple.cs" />
+    <Compile Include="ThreadingInterlockedMonitor.cs" />
     <Compile Include="ThreadingInterlockedSimple.cs" />
     <Compile Include="ThreadingSimpleMemoryBarrierRace.cs" />
     <Compile Include="ThreadingSimpleTimer.cs" />
