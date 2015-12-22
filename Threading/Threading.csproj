@@ -50,6 +50,7 @@
     <Compile Include="ThreadingBackgroundWorkerSimple.cs" />
     <Compile Include="ThreadingInterlockedMonitor.cs" />
     <Compile Include="ThreadingInterlockedSimple.cs" />
+    <Compile Include="ThreadingBarrier.cs" />
     <Compile Include="ThreadingWaitPulseWorker.cs" />
     <Compile Include="ThreadingSimpleMemoryBarrierRace.cs" />
     <Compile Include="ThreadingSimpleTimer.cs" />
