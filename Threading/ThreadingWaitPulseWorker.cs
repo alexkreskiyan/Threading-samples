@@ -88,7 +88,6 @@ namespace ThreadingWaitPulseWorker
     internal class Worker
     {
         private int id;
-        private bool active = true;
         private Queue<Message> messages = new Queue<Message>();
         private object locker = new object();
         private CountdownEvent countdown;
@@ -104,23 +103,24 @@ namespace ThreadingWaitPulseWorker
             //setup thread name
             Thread.CurrentThread.Name = "Worker#" + id;
 
-            //when active set to false - end
-            while (active || messages.Count > 0)
+            while (true)
             {
-                //if no messages - wait
-                if (messages.Count == 0)
-                    lock (locker)
+                Message message;
+
+                //lock until message achieved
+                lock (locker)
+                {
+                    while (messages.Count == 0)
                         Monitor.Wait(locker);
 
-                //safely get upcoming message
-                Message message = null;
-                lock (locker)
-                    if (messages.Count > 0)
-                        message = messages.Dequeue();
+                    message = messages.Dequeue();
+                }
 
-                //if message given - run with it
-                if (message != null)
-                    Run(message);
+                //end if null message
+                if (message == null)
+                    break;
+
+                Run(message);
             }
 
             //signal to countdown before end
@@ -141,7 +141,7 @@ namespace ThreadingWaitPulseWorker
         {
             lock (locker)
             {
-                active = false;
+                messages.Enqueue(null);
                 Monitor.Pulse(locker);
             }
         }
