@@ -7,6 +7,7 @@ namespace ThreadingWaitPulseWorker
 {
     internal class Test
     {
+        private static bool Active = true;
         private static Worker[] Pool;
 
         public static void Run()
@@ -14,6 +15,13 @@ namespace ThreadingWaitPulseWorker
             var workersCount = 3;
             var workerThreadsCount = 4;
             Program.WriteLine("Booting up...");
+
+            Console.CancelKeyPress += (sender, e) =>
+            {
+                Program.WriteLine("Shutdown requested...");
+                e.Cancel = true;
+                Active = false;
+            };
 
             using (var countdown = new CountdownEvent(workersCount))
                 Process(countdown, workerThreadsCount);
@@ -27,9 +35,8 @@ namespace ThreadingWaitPulseWorker
             Pool = GetPool(countdown, workerThreadsCount);
 
             //send commands from console until ESC pressed
-            string command;
-            while ((command = Console.ReadLine()).ToLower() != "quit")
-                SendCommand(command);
+            while (Active)
+                SendCommand(Console.ReadLine());
 
             //send signal to end all workers
             Program.WriteLine("End all workers");
@@ -53,6 +60,8 @@ namespace ThreadingWaitPulseWorker
         private static void SendCommand(string command)
         {
             Program.WriteLine("Sending command `{0}`", command);
+            if (command == null)
+                return;
 
             var parts = command.Split(" ".ToCharArray(), 3);
             if (parts.Length < 3)
