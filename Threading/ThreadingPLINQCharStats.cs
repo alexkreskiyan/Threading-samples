@@ -40,4 +40,4 @@ namespace ThreadingPLINQCharStats
             Program.WriteLine("End...");
         }
     }
-}//abcdefghijklmnopqrstuvwxyz
+}
