@@ -2,9 +2,10 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Threading;
 
-namespace ThreadingPLINQCharStats
+namespace ThreadingParallelForEachCharStats
 {
     internal class Test
     {
@@ -18,20 +19,26 @@ namespace ThreadingPLINQCharStats
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var stats = Enumerable.Range(0, 100000000)
-                .AsParallel()
-                .WithDegreeOfParallelism(Environment.ProcessorCount)
-                .Select((i) => localRandom.Value.Next(0, lettersCount))
-                .Aggregate(
-                    () => new int[lettersCount],
-                    (frequences, ch) =>
+            var locker = new object();
+            var stats = new int[lettersCount];
+
+            Parallel.ForEach(
+                Enumerable.Range(0, 100000000),
+                () => new int[lettersCount],
+                (i, state, frequences) =>
+                {
+                    var ch = localRandom.Value.Next(0, lettersCount);
+                    ++frequences[ch];
+                    return frequences;
+                },
+                frequences =>
+                {
+                    lock (locker)
                     {
-                        ++frequences[ch];
-                        return frequences;
-                    },
-                    (main, local) => main.Zip(local, (f1, f2) => f1 + f2).ToArray(),
-                    result => result
-                );
+                        stats = stats.Zip(frequences, (f1, f2) => f1 + f2).ToArray();
+                    }
+                }
+            );
 
             var count = stats.Count();
             stopwatch.Stop();
