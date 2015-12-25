@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Threading;
 using Threading;
 
-namespace ThreadingProducerConsumerAuto
+namespace ThreadingBlockingCollection
 {
     internal class Test
     {
@@ -26,10 +26,9 @@ namespace ThreadingProducerConsumerAuto
 
     internal class ProducerConsumerQueue : IDisposable
     {
-        private EventWaitHandle waitHandle = new AutoResetEvent(false);
         private Thread worker;
         private readonly object locker = new object();
-        private Queue<string> tasks = new Queue<string>();
+        private BlockingCollection<string> tasks = new BlockingCollection<string>();
 
         public ProducerConsumerQueue()
         {
@@ -41,12 +40,8 @@ namespace ThreadingProducerConsumerAuto
 
         public void AddTask(string task)
         {
-            lock (locker)
-            {
-                Program.WriteLine("Adding task `{0}`", task);
-                tasks.Enqueue(task);
-            }
-            waitHandle.Set();
+            Program.WriteLine("Adding task `{0}`", task);
+            tasks.Add(task);
         }
 
         public void Dispose()
@@ -57,9 +52,6 @@ namespace ThreadingProducerConsumerAuto
             // Wait for the consumer's thread to finish.
             worker.Join();
 
-            // Release any OS resources.
-            waitHandle.Close();
-
             Program.WriteLine("Queue disposed");
         }
 
@@ -67,24 +59,12 @@ namespace ThreadingProducerConsumerAuto
         {
             while (true)
             {
-                string task = null;
-
-                //get next task
-                lock (locker)
-                    if (tasks.Count > 0)
-                    {
-                        task = tasks.Dequeue();
-                        if (task == null)
-                        {
-                            Program.WriteLine("Termination signal received. Ending");
-                            return;
-                        }
-                    }
+                var task = tasks.Take();
 
                 if (task == null)
                 {
                     Program.WriteLine("No more tasks, wait for a signal");
-                    waitHandle.WaitOne();
+                    return;
                 }
                 else
                 {

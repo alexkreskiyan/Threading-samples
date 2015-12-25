@@ -48,6 +48,7 @@
     <Compile Include="ThreadingBackgroundWorkerComplex.cs" />
     <Compile Include="ThreadingParallelForEachCharStats.cs" />
     <Compile Include="ThreadingPLINQCharStats.cs" />
+    <Compile Include="ThreadingBlockingCollection.cs" />
     <Compile Include="ThreadingReadWriteLock.cs" />
     <Compile Include="ThreadingCountdownEvent.cs" />
     <Compile Include="ThreadingBackgroundWorkerSimple.cs" />
